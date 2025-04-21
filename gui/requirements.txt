@@ -10,3 +10,7 @@ python-docx>=0.8.11
 reportlab>=4.0.4
 pyinstaller>=5.13.0
 numpy>=1.24.3
+# Thêm vào cuối file requirements.txt hiện có
+numpy>=1.20.0
+requests>=2.25.0
+apscheduler>=3.7.0

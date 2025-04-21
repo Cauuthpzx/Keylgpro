@@ -1,0 +1,40 @@
+2025-04-21 14:10:14,769 [INFO] core.screenshot.1370536274848: Khởi động chụp màn hình mỗi 60s
+2025-04-21 14:11:14,821 [INFO] core.screenshot.1370536274848: Đã chụp screenshot: scr_20250421_141114_169c872d.png
+2025-04-21 14:11:21,038 [INFO] core.screenshot.1370536274848: Dừng chụp màn hình
+2025-04-21 14:11:23,057 [INFO] core.screenshot.1370536455824: Khởi động chụp màn hình mỗi 2s
+2025-04-21 14:11:25,156 [INFO] core.screenshot.1370536455824: Đã chụp screenshot: scr_20250421_141125_d63d48af.png
+2025-04-21 14:11:29,156 [INFO] core.screenshot.1370536455824: Đã chụp screenshot: scr_20250421_141129_79d30953.png
+2025-04-21 14:11:31,277 [INFO] core.screenshot.1370536455824: Đã chụp screenshot: scr_20250421_141131_41bb4204.png
+2025-04-21 14:11:33,172 [INFO] core.screenshot.1370536455824: Đã chụp screenshot: scr_20250421_141133_c5ca3c74.png
+2025-04-21 14:11:35,171 [INFO] core.screenshot.1370536455824: Đã chụp screenshot: scr_20250421_141135_3acf9983.png
+2025-04-21 14:11:49,174 [INFO] core.screenshot.1370536455824: Đã chụp screenshot: scr_20250421_141149_fb2182b1.png
+2025-04-21 14:11:51,786 [INFO] core.screenshot.1370536455824: Dừng chụp màn hình
+2025-04-21 14:20:51,773 [INFO] core.screenshot.1489338330688: Khởi động chụp màn hình mỗi 2s
+2025-04-21 14:20:53,830 [INFO] core.screenshot.1489338330688: Đã chụp screenshot: scr_20250421_142053_005580a0.png
+2025-04-21 14:20:55,830 [INFO] core.screenshot.1489338330688: Đã chụp screenshot: scr_20250421_142055_e1a9d9b5.png
+2025-04-21 14:20:57,816 [INFO] core.screenshot.1489338330688: Đã chụp screenshot: scr_20250421_142057_e291c305.png
+2025-04-21 14:20:59,830 [INFO] core.screenshot.1489338330688: Đã chụp screenshot: scr_20250421_142059_bee841bb.png
+2025-04-21 14:21:01,610 [INFO] core.screenshot.1489338330688: Dừng chụp màn hình
+2025-04-21 14:42:53,237 [INFO] core.screenshot.1583412669680: Khởi động chụp màn hình mỗi 2s
+2025-04-21 14:42:55,291 [INFO] core.screenshot.1583412669680: Đã chụp screenshot: scr_20250421_144255_cc225079.png
+2025-04-21 14:42:57,288 [INFO] core.screenshot.1583412669680: Đã chụp screenshot: scr_20250421_144257_6d21d9c1.png
+2025-04-21 14:42:59,288 [INFO] core.screenshot.1583412669680: Đã chụp screenshot: scr_20250421_144259_50c3621b.png
+2025-04-21 14:43:01,289 [INFO] core.screenshot.1583412669680: Đã chụp screenshot: scr_20250421_144301_08b57d3a.png
+2025-04-21 14:43:03,272 [INFO] core.screenshot.1583412669680: Đã chụp screenshot: scr_20250421_144303_d303aba5.png
+2025-04-21 14:43:05,289 [INFO] core.screenshot.1583412669680: Đã chụp screenshot: scr_20250421_144305_c873618c.png
+2025-04-21 14:43:06,369 [INFO] core.screenshot.1583412669680: Dừng chụp màn hình
+2025-04-21 14:45:33,829 [INFO] core.screenshot.1893499153648: Khởi động chụp màn hình mỗi 5s
+2025-04-21 14:45:38,907 [INFO] core.screenshot.1893499153648: Đã chụp screenshot: scr_20250421_144538_8f725d48.png
+2025-04-21 14:45:43,918 [INFO] core.screenshot.1893499153648: Đã chụp screenshot: scr_20250421_144543_df802a84.png
+2025-04-21 14:45:48,902 [INFO] core.screenshot.1893499153648: Đã chụp screenshot: scr_20250421_144548_d5157147.png
+2025-04-21 14:45:53,902 [INFO] core.screenshot.1893499153648: Đã chụp screenshot: scr_20250421_144553_869416ee.png
+2025-04-21 14:45:58,902 [INFO] core.screenshot.1893499153648: Đã chụp screenshot: scr_20250421_144558_26557f77.png
+2025-04-21 14:46:03,903 [INFO] core.screenshot.1893499153648: Đã chụp screenshot: scr_20250421_144603_f2575027.png
+2025-04-21 14:46:08,920 [INFO] core.screenshot.1893499153648: Đã chụp screenshot: scr_20250421_144608_ea30b255.png
+2025-04-21 14:46:13,903 [INFO] core.screenshot.1893499153648: Đã chụp screenshot: scr_20250421_144613_aaaeac35.png
+2025-04-21 14:46:18,903 [INFO] core.screenshot.1893499153648: Đã chụp screenshot: scr_20250421_144618_5d0613cf.png
+2025-04-21 14:46:23,908 [INFO] core.screenshot.1893499153648: Đã chụp screenshot: scr_20250421_144623_b14b6847.png
+2025-04-21 14:46:25,835 [INFO] core.screenshot.1893499153648: Tạm dừng chụp màn hình
+2025-04-21 14:58:33,789 [INFO] core.screenshot.2251265355328: Khởi động chụp màn hình mỗi 60s
+2025-04-21 14:59:33,897 [INFO] core.screenshot.2251265355328: Đã chụp screenshot: scr_20250421_145933_f464b469.png
+2025-04-21 14:59:37,261 [INFO] core.screenshot.2251265355328: Dừng chụp màn hình

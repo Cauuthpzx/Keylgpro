@@ -6,7 +6,8 @@ Frames package for the GUI components
 
 __author__ = "Developer"
 __version__ = "1.0.0"
-
+# Thêm vào file gui/frames/__init__.py
+from .screenshot_frame import ScreenshotFrame
 from .keylogger_frame import KeyloggerFrame
 from .management_frame import ManagementFrame
 from .bait_frame import BaitFrame

